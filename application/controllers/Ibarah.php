@@ -5,14 +5,14 @@ class Ibarah extends CI_CONTROLLER{
         $this->load->model('Arab_model');
         $this->load->model('Admin_model');
         $this->load->model('Ibarah_model');
-        if($this->session->userdata('status') != "login"){
+        if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
-			redirect(base_url("login"));
-		}
+            redirect(base_url("auth"));
+        }
     }
 
     public function awwal(){
-        $id = $this->session->userdata('id');
+        $id = $this->session->userdata("id_civitas");
         $data['user'] = $this->Admin_model->get_one("user", ["id_user" => $id]);
         // kelas & program
             $data['kelas'] = [];

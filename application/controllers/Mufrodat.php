@@ -7,14 +7,14 @@ class Mufrodat extends CI_CONTROLLER{
         ini_set('xdebug.var_display_max_depth', '10');
         ini_set('xdebug.var_display_max_children', '256');
         ini_set('xdebug.var_display_max_data', '1024');
-        if($this->session->userdata('status') != "login"){
+        if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
-            redirect(base_url("login"));
+            redirect(base_url("auth"));
         }
     }
 
     public function index(){
-        $id = $this->session->userdata('id');
+        $id = $this->session->userdata("id_civitas");
         $data['listmurojaah'] = $this->Admin_model->get_all("murojaah", ["id_user" => $id]);
         $data['user'] = $this->Admin_model->get_one("user", ["id_user" => $id]);
         $data['murojaah'] = [];
@@ -548,7 +548,7 @@ class Mufrodat extends CI_CONTROLLER{
     }
 
     public function listmurojaah(){
-        $id = $this->session->userdata('id');
+        $id = $this->session->userdata("id_civitas");
         $data['user'] = $this->Admin_model->get_one("user", ["id_user" => $id]);
         $data['mufrodat'] = $this->Admin_model->get_all("murojaah", ["id_user" => $id]);
         $data['title'] = "Murojaah Mufrodat";
@@ -561,7 +561,7 @@ class Mufrodat extends CI_CONTROLLER{
 
     // add
         public function murojaah(){
-            $id = $this->session->userdata('id');
+            $id = $this->session->userdata("id_civitas");
             $data = [
                 "id_user" => $id,
                 "kata_arab" => $this->input->post("kata_arab", TRUE),
@@ -585,7 +585,7 @@ class Mufrodat extends CI_CONTROLLER{
         }
 
         public function add_mufrodat(){
-            $id = $this->session->userdata('id');
+            $id = $this->session->userdata("id_civitas");
             $redirect = $this->input->post("redirect", TRUE);
             $latihan = $this->input->post("latihan", TRUE);
             $materi = $this->input->post("materi", TRUE);

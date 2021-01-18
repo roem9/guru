@@ -4,9 +4,9 @@ class Kelas extends CI_CONTROLLER{
         parent::__construct();
         $this->load->model('Arab_model');
         $this->load->model('Admin_model');
-        if($this->session->userdata('status') != "login"){
+        if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
-            redirect(base_url("login"));
+            redirect(base_url("auth"));
         }
     }
 
@@ -114,7 +114,7 @@ class Kelas extends CI_CONTROLLER{
     }
 
     public function index(){
-        $id = $this->session->userdata("id");
+        $id = $this->session->userdata("id_civitas");
         $data['title'] = "List Kelas";
         
         // kelas & program
@@ -132,7 +132,7 @@ class Kelas extends CI_CONTROLLER{
     }
 
     public function ajax_list(){
-        $id = $this->session->userdata("id");
+        $id = $this->session->userdata("id_civitas");
         $data = [];
         $kelas = $this->Admin_model->get_all("kelas", ["id_civitas" => $id]);
         foreach ($kelas as $i => $kelas) {
@@ -204,7 +204,7 @@ class Kelas extends CI_CONTROLLER{
             if(!isset($hadir)){
                 $detail = $this->Admin_model->get_one("user", ["id_user" => $peserta['id_user']]);
                 $data['absen'][$i] = $detail;
-                $data['absen'][$i]['pesan'] = "https://wa.me/62".substr($detail['no_hp'], 1)."?text=Anda%20belum%20mengisi%20kehadiran%20di%20kelas%20".str_replace("#", "%23", str_replace(" ", "%20", $kelas['nama_kelas']))."%20".str_replace(" ", "%20", $pertemuan)."%2C%20silahkan%20mengisi%20kehadiran%20Anda%20segera%20melalui%20member%20area%20pada%20link%20cekmember.mrscholae.com";
+                $data['absen'][$i]['pesan'] = "https://wa.me/62".substr($detail['no_hp'], 1)."?text=*Pengingat*%0A%0AMateri%20".str_replace(" ", "%20", $pertemuan)."%20telah%20diupdate%20di%20kelas%20".str_replace("#", "%23", str_replace(" ", "%20", $kelas['nama_kelas']))."%2C%20silahkan%20kunjungi%20app.mrscholae.com";
             }
         }
 

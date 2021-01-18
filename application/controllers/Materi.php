@@ -8,14 +8,14 @@ class Materi extends CI_CONTROLLER{
         ini_set('xdebug.var_display_max_depth', '10');
         ini_set('xdebug.var_display_max_children', '256');
         ini_set('xdebug.var_display_max_data', '1024');
-        if($this->session->userdata('status') != "login"){
+        if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
-            redirect(base_url("login"));
+            redirect(base_url("auth"));
         }
     }
 
     public function program($materi){
-        $id = $this->session->userdata('id');
+        $id = $this->session->userdata("id_civitas");
         $data['user'] = $this->Admin_model->get_one("user", ["id_user" => $id]);
         // kelas & program
             $data['kelas'] = [];
@@ -13333,7 +13333,7 @@ class Materi extends CI_CONTROLLER{
 
     // add
         public function add_latihan(){
-            $id = $this->session->userdata('id');
+            $id = $this->session->userdata("id_civitas");
             $redirect = $this->input->post("redirect", TRUE);
             $latihan = $this->input->post("latihan", TRUE);
             $materi = $this->input->post("materi", TRUE);

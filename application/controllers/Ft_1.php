@@ -9,13 +9,13 @@ class Ft_1 extends CI_CONTROLLER{
         ini_set('xdebug.var_display_max_depth', '10');
         ini_set('xdebug.var_display_max_children', '256');
         ini_set('xdebug.var_display_max_data', '1024');
-        if($this->session->userdata('status') != "login"){
+        if(!$this->session->userdata('id_civitas')){
             $this->session->set_flashdata('login', 'Maaf, Anda harus login terlebih dahulu');
-            redirect(base_url("login"));
+            redirect(base_url("auth"));
         }
 
         
-        $id = $this->session->userdata('id');
+        $id = $this->session->userdata("id_civitas");
         $data['user'] = $this->Admin_model->get_one("user", ["id_user" => $id]);
         // kelas & program
             $data['kelas'] = [];
@@ -33,7 +33,7 @@ class Ft_1 extends CI_CONTROLLER{
     }
 
     public function mufrodat(){
-        $id = $this->session->userdata('id');
+        $id = $this->session->userdata("id_civitas");
         $data['user'] = $this->Admin_model->get_one("user", ["id_user" => $id]);
         // kelas & program
             $data['kelas'] = [];
@@ -250,7 +250,7 @@ class Ft_1 extends CI_CONTROLLER{
     }
 
     public function qowaid(){
-        $id = $this->session->userdata('id');
+        $id = $this->session->userdata("id_civitas");
         $data['user'] = $this->Admin_model->get_one("user", ["id_user" => $id]);
         // kelas & program
             $data['kelas'] = [];
@@ -948,7 +948,7 @@ class Ft_1 extends CI_CONTROLLER{
         }
 
         public function get_tema(){
-            $id_user = $this->session->userdata('id');
+            $id_user = $this->session->userdata("id_civitas");
             $id = $this->input->post("id");
             $tema = $this->Ft1_model->tema();
             $bab = $this->Ft1_model->bab();
@@ -979,7 +979,7 @@ class Ft_1 extends CI_CONTROLLER{
 
     // add
         public function add_latihan(){
-            $id = $this->session->userdata('id');
+            $id = $this->session->userdata("id_civitas");
             $redirect = $this->input->post("redirect", TRUE);
             $latihan = $this->input->post("latihan", TRUE);
             $materi = $this->input->post("materi", TRUE);

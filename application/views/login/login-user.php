@@ -8,9 +8,9 @@
 					<div class="row">
 					<div class="col-lg-12 col-12">
 						<div class="p-5">
-								<div class="text-center mb-3">
+								<!-- <div class="text-center mb-3">
 									<img src="<?= base_url()?>assets/img/logo.png" width="75" class="img-fluid img-shadow">
-								</div>
+								</div> -->
 								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">أَهْلًا وَ سَهْلًا</h1>
 								</div>
@@ -21,12 +21,15 @@
 										</div>
 									</div>
 								<?php endif; ?>
-								<form action="" method="POST">
+								<form action="<?= base_url()?>auth/login" method="POST">
 									<div class="form-group">
 										<input type="text" class="form-control form-control-user" value="<?= set_value('username', '')?>" placeholder="Username" name="username" required>
 									</div>
 									<div class="form-group">
 										<input type="password" class="form-control form-control-user" value="<?= set_value('password', '')?>" placeholder="Password" name="password" required>
+									</div>
+									<div class="form-group">
+										<input type="checkbox" name="remember" id="remember" value="remember"> <label for="remember">Ingat saya</label>
 									</div>
 									<button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
 								</form>
